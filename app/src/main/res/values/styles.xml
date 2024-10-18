@@ -1,0 +1,8 @@
+<resources>
+    <style name="App.Custom.Indicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <item name="android:width">100dp</item>
+        <item name="android:height">100dp</item>
+        <item name="android:shape">rectangle</item>
+        <item name="android:colorAccent">#FFEB3B</item> <!-- Màu chỉ báo -->
+    </style>
+</resources>
