@@ -2,6 +2,7 @@ package com.example.tarottales;
 
 import android.annotation.SuppressLint;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.widget.ImageView;
@@ -57,6 +58,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void initDatabase() {
         dbContext = new DBContext(this);
-        dbContext.getWritableDatabase();
+        new Thread(() -> {
+            dbContext.getWritableDatabase();
+        }).start();
     }
 }
