@@ -25,14 +25,13 @@
         android:id="@+id/bottom_navigation_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/colorDark"
+        app:itemActiveIndicatorStyle="@style/App.Custom.Indicator"
+        app:itemIconSize="49dp"
+        app:itemIconTint="@color/colorLight"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/bottom_navigation_menu"
-        android:background="@color/colorDark"
-        app:itemIconTint="@color/colorLight"
-        app:itemIconSize="49dp"
-        app:itemActiveIndicatorStyle="@style/App.Custom.Indicator"
-        />
+        app:menu="@menu/bottom_navigation_menu" />
 </androidx.constraintlayout.widget.ConstraintLayout>
