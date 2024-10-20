@@ -18,4 +18,6 @@ public class TarotCardDAO extends DBContext{
     public void insertCards(List<TarotCard> cards){
         SQLiteDatabase db = getWritableDatabase();
     }
+
+
 }
