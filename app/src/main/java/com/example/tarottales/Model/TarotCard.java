@@ -1,8 +1,9 @@
 package com.example.tarottales.Model;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class TarotCard {
+public class TarotCard implements Serializable {
     private int id;
     private String name;
     private int image;
@@ -53,6 +54,8 @@ public class TarotCard {
         this.spirit = spirit;
     }
 
+    public TarotCard() {
+    }
 
     public int getId() {
         return id;

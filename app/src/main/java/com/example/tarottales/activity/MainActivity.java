@@ -1,12 +1,7 @@
-package com.example.tarottales;
+package com.example.tarottales.activity;
 
-import android.annotation.SuppressLint;
-import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,6 +10,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.tarottales.Database.DBContext;
+import com.example.tarottales.R;
 import com.example.tarottales.fragment.ChatFragment;
 import com.example.tarottales.fragment.DailyFragment;
 import com.example.tarottales.fragment.LearnFragment;
