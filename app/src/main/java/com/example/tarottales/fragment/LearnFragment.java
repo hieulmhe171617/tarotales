@@ -1,60 +1,73 @@
 package com.example.tarottales.fragment;
 
+import android.annotation.SuppressLint;
+import android.database.Cursor;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.tarottales.Database.LearnDAO;
+import com.example.tarottales.Database.TarotCardDAO;
+import com.example.tarottales.Model.Element;
+import com.example.tarottales.Model.Planet;
+import com.example.tarottales.Model.TarotCard;
+import com.example.tarottales.Model.Zodiac;
 import com.example.tarottales.R;
+import com.example.tarottales.adapter.LearnCardAdapter;
+import com.example.tarottales.adapter.LearnElementAdapter;
+import com.example.tarottales.adapter.LearnPlanetAdapter;
+import com.example.tarottales.adapter.LearnZodiacAdapter;
+import com.google.android.material.tabs.TabLayout;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link LearnFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
+
 public class LearnFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private static final int TAB_CARD = 0;
+    private static final int TAB_ELEMENT = 1;
+    private static final int TAB_PLANET = 2;
+    private static final int TAB_ZODIAC = 3;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    //<editor-fold desc="Declare - Binding View - Action">
+
+    // Data
+    LearnDAO learnDAO;
+    List<TarotCard> listCard;
+    List<Element> listElement;
+    List<Planet> listPlanet;
+    List<Zodiac> listZodiac;
+
+    // Tab layout
+    TabLayout tab_layout_learn;
+    RecyclerView rcvListCard;
+
+    // binding
+    void bindingView() {
+        tab_layout_learn = getView().findViewById(R.id.tab_layout_learn);
+        rcvListCard = getView().findViewById(R.id.rcvListCard);
+        if(learnDAO == null)
+            learnDAO = new LearnDAO(getContext());
+    }
+
+    void bindingAction() {
+        SetLearnCardToRecyclerView();
+    }
+
+    //</editor-fold>
 
     public LearnFragment() {
         // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment LearnFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static LearnFragment newInstance(String param1, String param2) {
-        LearnFragment fragment = new LearnFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -63,4 +76,98 @@ public class LearnFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_learn, container, false);
     }
+
+
+    // on create tab layout
+    private void onCreateTabLayoutLearn() {
+        // create tabs
+        tab_layout_learn.addTab(tab_layout_learn.newTab().setText("Bộ bài")); // 0
+        tab_layout_learn.addTab(tab_layout_learn.newTab().setText("Nguyên tố")); // 1
+        tab_layout_learn.addTab(tab_layout_learn.newTab().setText("Hành tinh")); // 2
+        tab_layout_learn.addTab(tab_layout_learn.newTab().setText("Hoàng đạo")); // 3
+        // set default selected tab
+        Objects.requireNonNull(tab_layout_learn.getTabAt(0)).select();
+        // handle on select
+        tab_layout_learn.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            // on tab selected
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                int tabPosition = tab.getPosition();
+                if (tabPosition == TAB_CARD) {
+                    // Card tab
+                    SetLearnCardToRecyclerView();
+                } else if (tabPosition == TAB_ELEMENT) {
+                    // Element tab
+                    SetLearnElementToRecyclerView();
+                } else if (tabPosition == TAB_PLANET) {
+                    // Planet tab
+                    SetLearnPlanetToRecyclerView();
+                } else if (tabPosition == TAB_ZODIAC) {
+                    // Zodiac tab
+                    SetLearnZodiacToRecyclerView();
+                }
+
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
+    }
+
+
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        bindingView();
+        bindingAction();
+        onCreateTabLayoutLearn();
+    }
+
+    //<editor-fold desc="Set data to recycler view method">
+
+    // set card
+    private void SetLearnCardToRecyclerView() {
+        this.listCard = learnDAO.getListCard();
+        LearnCardAdapter learnCardAdapter = new LearnCardAdapter(this.listCard);
+        rcvListCard.setAdapter(learnCardAdapter);
+        rcvListCard.setLayoutManager(new GridLayoutManager(getContext(), 3));
+    }
+
+    // set element
+    private void SetLearnElementToRecyclerView() {
+        this.listElement = learnDAO.getListElement();
+        LearnElementAdapter learnElementAdapter = new LearnElementAdapter(this.listElement);
+        rcvListCard.setAdapter(learnElementAdapter);
+        rcvListCard.setLayoutManager(new GridLayoutManager(getContext(), 2));
+    }
+
+    // set planet
+    private void SetLearnPlanetToRecyclerView() {
+        this.listPlanet = learnDAO.getListPlanet();
+        LearnPlanetAdapter learnPlanetAdapter = new LearnPlanetAdapter(this.listPlanet);
+        rcvListCard.setAdapter(learnPlanetAdapter);
+        rcvListCard.setLayoutManager(new GridLayoutManager(getContext(), 2));
+    }
+
+    // set zodiac
+    private void SetLearnZodiacToRecyclerView() {
+        this.listZodiac = learnDAO.getListZodiac();
+        LearnZodiacAdapter learnZodiacAdapter = new LearnZodiacAdapter(this.listZodiac);
+        rcvListCard.setAdapter(learnZodiacAdapter);
+        rcvListCard.setLayoutManager(new GridLayoutManager(getContext(), 2));
+    }
+
+    //</editor-fold>
+
+
+
+
 }
