@@ -101,8 +101,18 @@ public class ChatFragment extends Fragment {
 
     private void addResponse(String response) {
         messageList.remove(messageList.size() - 1); // Remove "Typing..." message
-        addToChat(response, Message.SENT_BY_BOT);
+        // Thực hiện markdown cho tin nhắn với kí tự ** hoặc ##
+        String formattedResponse = formatMarkdown(response);
+        addToChat(formattedResponse, Message.SENT_BY_BOT);
     }
+
+    private String formatMarkdown(String text) {
+        // Xử lý kí tự ** hoặc ## để in đậm
+        text = text.replaceAll("\\*\\*(.*?)\\*\\*", "<b>$1</b>");
+        text = text.replaceAll("##(.*?)##", "<b>$1</b>");
+        return text;
+    }
+
 
     private void callGeminiAPI(String question) {
         // Add "Typing..." message
