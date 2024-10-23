@@ -4,5 +4,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="colorDark">#1F1E1E</color>
     <color name="colorLight">#FFFFFF</color>
-
+    <color name="background_black">#1F1B1B</color>
 </resources>

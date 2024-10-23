@@ -2,4 +2,35 @@
     <string name="app_name">TarotTales</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!--Element Name-->
+    <string name="element_fire">Lửa</string>
+    <string name="element_water">Nước</string>
+    <string name="element_earth">Đất</string>
+    <string name="element_air">Khí</string>
+
+    <!--Planet Name-->
+    <string name="planet_mercury">Thủy Tinh</string>
+    <string name="planet_venus">Kim Tinh</string>
+    <string name="planet_earth">Địa Cầu</string>
+    <string name="planet_mars">Hỏa Tinh</string>
+    <string name="planet_jupiter">Mộc Tinh</string>
+    <string name="planet_saturn">Thổ Tinh</string>
+    <string name="planet_sun">Mặt Trời</string>
+    <string name="planet_moon">Mặt Trăng</string>
+
+    <!--Zodiac Name-->
+    <string name="zodiac_aries">Bạch Dương</string>
+    <string name="zodiac_taurus">Kim Ngưu</string>
+    <string name="zodiac_gemini">Song Tử</string>
+    <string name="zodiac_cancer">Cự Giải</string>
+    <string name="zodiac_leo">Sư Tử</string>
+    <string name="zodiac_virgo">Xử Nữ</string>
+    <string name="zodiac_libra">Thiên Bình</string>
+    <string name="zodiac_scorpio">Thiên Yết</string>
+    <string name="zodiac_sagittarius">Nhân Mã</string>
+    <string name="zodiac_capricorn">Ma Kết</string>
+    <string name="zodiac_aquarius">Bảo Bình</string>
+    <string name="zodiac_pisces">Song Ngư</string>
+
 </resources>

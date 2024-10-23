@@ -22,7 +22,10 @@ public class TarotCard implements Serializable {
     private List<Planet> planets;
     private List<Zodiac> zodiacs;
 
+    public TarotCard() {
+    }
 
+    // include n-n relationship
     public TarotCard(String name, int image, int cardNumber, String otherName, String keyword, String overview, String job, String love, String finance, String health, String spirit, List<Element> elements, List<Planet> planets, List<Zodiac> zodiacs) {
         this.name = name;
         this.image = image;
