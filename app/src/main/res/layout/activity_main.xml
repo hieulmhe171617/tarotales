@@ -19,7 +19,8 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0"
         android:layout_marginBottom="20dp"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="20dp"
+        android:name="com.example.tarottales.fragment.DailyFragment"/>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation_view"
