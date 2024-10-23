@@ -1,4 +1,4 @@
-package com.example.tarottales.activity;
+package com.example.tarottales;
 
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -10,7 +10,6 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.tarottales.Database.DBContext;
-import com.example.tarottales.R;
 import com.example.tarottales.fragment.ChatFragment;
 import com.example.tarottales.fragment.DailyFragment;
 import com.example.tarottales.fragment.LearnFragment;

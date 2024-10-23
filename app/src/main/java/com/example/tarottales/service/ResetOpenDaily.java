@@ -12,7 +12,7 @@ import android.util.Log;
 
 import androidx.core.app.NotificationCompat;
 
-import com.example.tarottales.activity.MainActivity;
+import com.example.tarottales.MainActivity;
 import com.example.tarottales.R;
 
 public class ResetOpenDaily extends BroadcastReceiver {
