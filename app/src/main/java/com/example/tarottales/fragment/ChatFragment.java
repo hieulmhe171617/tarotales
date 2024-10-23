@@ -13,10 +13,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.TextView;
 
 import com.example.tarottales.Model.Message;
-import com.example.tarottales.Model.MessageAdapter;
+import com.example.tarottales.adapter.MessageAdapter;
 import com.example.tarottales.R;
 import com.google.ai.client.generativeai.GenerativeModel;
 import com.google.ai.client.generativeai.java.GenerativeModelFutures;

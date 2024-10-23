@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragment.MonthlyFragment"
+    android:background="#1F1B1B">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/menuLeft"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cvDay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/menuLeft"
+            app:layout_constraintLeft_toLeftOf="@id/menuLeft"
+            app:layout_constraintBottom_toBottomOf="@id/menuLeft"
+            app:layout_constraintVertical_bias="0.2"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:backgroundTint="#1F1B1B">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+                <ImageView
+                    android:id="@+id/ivDay"
+                    android:layout_width="50dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/dailyday_white"
+                    />
+                <TextView
+                    android:id="@+id/tvDay"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Ngày"
+                    android:gravity="center"
+                    android:textSize="17sp"
+                    android:textColor="@color/white"
+                    />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cvMonth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/cvDay"
+            app:layout_constraintLeft_toLeftOf="@id/menuLeft"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+           >
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <ImageView
+                    android:id="@+id/ivMonth"
+                    android:layout_width="50dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/dailymonth" />
+                <TextView
+                    android:id="@+id/tvMonth"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Tháng"
+                    android:gravity="center"
+                    android:textSize="17sp"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/contentRight"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/menuLeft"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        android:layout_marginLeft="5dp">
+
+        <ImageView
+            android:id="@+id/ivBlur"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:alpha="0.5"/>
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tháng của bạn"
+            android:textColor="#FFFFFF"
+            android:textSize="28sp"
+            android:gravity="center"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="10dp" />
+
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/ivTarotCard1"
+            app:layout_constraintLeft_toLeftOf="@id/ivTarotCard1"
+            android:text="Tuần 1"
+            android:textSize="19sp"
+            android:textColor="#FFF"
+            android:gravity="center"/>
+        <ImageView
+            android:id="@+id/ivTarotCard1"
+            android:layout_width="100dp"
+            android:layout_height="200dp"
+            android:layout_marginTop="40dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/tarot_back"
+            app:layout_constraintTop_toBottomOf="@id/tvTitle"
+            app:layout_constraintLeft_toLeftOf="@id/contentRight"
+            android:layout_marginLeft="30dp"
+            />
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/ivTarotCard2"
+            app:layout_constraintLeft_toLeftOf="@id/ivTarotCard2"
+            android:text="Tuần 2"
+            android:textSize="19sp"
+            android:textColor="#FFF"
+            android:gravity="center"/>
+        <ImageView
+            android:id="@+id/ivTarotCard2"
+            android:layout_width="100dp"
+            android:layout_height="200dp"
+            android:layout_marginTop="40dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/tarot_back"
+            app:layout_constraintTop_toBottomOf="@id/tvTitle"
+            app:layout_constraintLeft_toRightOf="@id/ivTarotCard1"
+            android:layout_marginLeft="60dp"/>
+
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/ivTarotCard3"
+            app:layout_constraintLeft_toLeftOf="@id/ivTarotCard3"
+            android:text="Tuần 3"
+            android:textSize="19sp"
+            android:textColor="#FFF"
+            android:gravity="center"/>
+        <ImageView
+            android:id="@+id/ivTarotCard3"
+            android:layout_width="100dp"
+            android:layout_height="200dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/tarot_back"
+            app:layout_constraintTop_toBottomOf="@id/ivTarotCard1"
+            app:layout_constraintLeft_toLeftOf="@id/contentRight"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="50dp"/>
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/ivTarotCard4"
+            app:layout_constraintLeft_toLeftOf="@id/ivTarotCard4"
+            android:text="Tuần 4"
+            android:textSize="19sp"
+            android:textColor="#FFF"
+            android:gravity="center"/>
+        <ImageView
+            android:id="@+id/ivTarotCard4"
+            android:layout_width="100dp"
+            android:layout_height="200dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/tarot_back"
+            app:layout_constraintLeft_toRightOf="@id/ivTarotCard3"
+            app:layout_constraintTop_toBottomOf="@id/ivTarotCard2"
+            android:layout_marginLeft="60dp"
+            android:layout_marginTop="50dp"
+             />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

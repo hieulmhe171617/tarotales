@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_learn_element_detail"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#1F1B1B"
+    tools:context=".activity.LearnCardDetailActivity">
+
+    <ScrollView
+        android:id="@+id/svLearnCardDetail"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:ignore="UselessParent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp"
+            tools:ignore="UselessLeaf" >
+
+            <ImageView
+                android:id="@+id/imgLearnCardDetail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/ace_of_cups" />
+
+            <TextView
+                android:id="@+id/tvLearnCardDetailTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/textView_title"
+                android:gravity="center"
+                android:text="Card Name Title" />
+
+            <TextView
+                android:id="@+id/tvLearnCardDetailCardNumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/textView_title"
+                android:text="Card No" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                style="@style/line_view_draw" />
+
+            <TextView
+                android:id="@+id/textView14"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/textView_title"
+                android:text="Tên gọi" />
+
+            <TextView
+                android:id="@+id/tvLearnCardDetailName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:text="Name" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                style="@style/line_view_draw" />
+
+            <TextView
+                android:id="@+id/textView15"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/textView_title"
+                android:text="NGUYÊN TỐ" />
+
+            <TextView
+                android:id="@+id/tvLearnCardDetailElement"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:text="Element" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                style="@style/line_view_draw" />
+
+            <TextView
+                android:id="@+id/textView16"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/textView_title"
+                android:text="Hành tinh" />
+
+            <TextView
+                android:id="@+id/tvLearnCardDetailPlanet"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:text="Planet" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                style="@style/line_view_draw" />
+
+            <TextView
+                android:id="@+id/textView17"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/textView_title"
+                android:text="Hoàng đạo" />
+
+            <TextView
+                android:id="@+id/tvLearnCardDetailZodiac"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:text="Zodiac" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                style="@style/line_view_draw" />
+
+            <TextView
+                android:id="@+id/textView18"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/textView_title"
+                android:text="Từ khóa" />
+
+            <TextView
+                android:id="@+id/tvLearnCardDetailKeyword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:text="Keyword" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                style="@style/line_view_draw" />
+
+            <TextView
+                android:id="@+id/textView19"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/textView_title"
+                android:text="Tổng quan" />
+
+            <TextView
+                android:id="@+id/tvLearnCardDetailOverview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:text="Overview" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                style="@style/line_view_draw" />
+
+            <TextView
+                android:id="@+id/textView20"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/textView_title"
+                android:text="Công việc" />
+
+            <TextView
+                android:id="@+id/tvLearnCardDetailJob"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:text="Job" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                style="@style/line_view_draw" />
+
+            <TextView
+                android:id="@+id/textView21"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/textView_title"
+                android:text="Tình cảm" />
+
+            <TextView
+                android:id="@+id/tvLearnCardDetailLove"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:text="Love" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                style="@style/line_view_draw" />
+
+            <TextView
+                android:id="@+id/textView22"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/textView_title"
+                android:text="Tiền bạc, tài chính" />
+
+            <TextView
+                android:id="@+id/tvLearnCardDetailFinance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:text="Finance" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                style="@style/line_view_draw" />
+
+            <TextView
+                android:id="@+id/textView23"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/textView_title"
+                android:text="Sức khỏe" />
+
+            <TextView
+                android:id="@+id/tvLearnCardDetailHealth"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:text="Health" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                style="@style/line_view_draw" />
+
+            <TextView
+                android:id="@+id/textView24"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/textView_title"
+                android:text="Tinh thần" />
+
+            <TextView
+                android:id="@+id/tvLearnCardDetailSpirit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:text="Spirit" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

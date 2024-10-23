@@ -5,4 +5,16 @@
 <!--        <item name="android:shape">ring</item>-->
         <item name="android:colorAccent">#FFEB3B</item> <!-- Màu chỉ báo -->
     </style>
+
+    <style name="textView_title">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="line_view_draw">
+        <item name="android:background">@android:color/holo_green_light</item>
+    </style>
+
 </resources>

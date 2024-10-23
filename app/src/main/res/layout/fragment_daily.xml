@@ -1,14 +1,152 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.DailyFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragment.DailyFragment"
+    android:background="#1F1B1B">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/menuLeft"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cvDay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/menuLeft"
+            app:layout_constraintLeft_toLeftOf="@id/menuLeft"
+            app:layout_constraintBottom_toBottomOf="@id/menuLeft"
+            app:layout_constraintVertical_bias="0.2"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            >
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                >
+                <ImageView
+                    android:id="@+id/ivDay"
+                    android:layout_width="50dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/dailyday"
+                   />
+                <TextView
+                    android:id="@+id/tvDay"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Ngày"
+                    android:gravity="center"
+                    android:textSize="17sp"
+                   />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
 
-</FrameLayout>
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cvMonth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/cvDay"
+            app:layout_constraintLeft_toLeftOf="@id/menuLeft"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            android:backgroundTint="#1F1B1B">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <ImageView
+                    android:id="@+id/ivMonth"
+                    android:layout_width="50dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/dailymonth_white" />
+                <TextView
+                    android:id="@+id/tvMonth"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Tháng"
+                    android:gravity="center"
+                    android:textColor="@color/white"
+                    android:textSize="17sp"/>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/contentRight"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/menuLeft"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        android:layout_marginLeft="5dp">
+
+        <ImageView
+            android:id="@+id/ivBlur"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:alpha="0.5"/>
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Hôm nay của bạn"
+            android:textColor="#FFFFFF"
+            android:textSize="28sp"
+            android:gravity="center"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="10dp"/>
+
+        <ImageView
+            android:id="@+id/ivTarotCard"
+            android:layout_width="wrap_content"
+            android:layout_height="300dp"
+            android:layout_marginTop="80dp"
+            android:src="@drawable/tarot_back"
+            app:layout_constraintTop_toBottomOf="@id/tvTitle"
+            app:layout_constraintLeft_toLeftOf="@id/contentRight"
+            app:layout_constraintRight_toRightOf="@id/contentRight"
+            />
+        <TextView
+            android:id="@+id/tvInfo1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/ivTarotCard"
+            android:layout_marginTop="40dp"
+            android:textSize="23sp"
+            android:text="Bạn có lượt mở thẻ hôm nay"
+            android:textColor="#FFFFFF"
+            android:gravity="center"/>
+        <TextView
+            android:id="@+id/tvInfo2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/tvInfo1"
+            android:layout_marginTop="20dp"
+            android:textSize="18sp"
+            android:textStyle="italic"
+            android:text="Click vào lá bài để mở"
+            android:textColor="#FFFFFF"
+            android:gravity="center"/>
+
+        <Button
+            android:id="@+id/btnResetAll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/tvInfo2"
+            app:layout_constraintLeft_toLeftOf="@id/contentRight"
+            android:text="Reset All"
+            />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
