@@ -35,6 +35,7 @@ dependencies {
     implementation ("com.google.code.gson:gson:2.11.0")
     implementation ("jp.wasabeef:glide-transformations:4.3.0")
     implementation ("com.github.bumptech.glide:glide:4.16.0")
+    implementation("io.noties.markwon:core:4.6.2")
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)

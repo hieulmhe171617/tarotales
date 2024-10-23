@@ -23,6 +23,8 @@
             android:exported="false" />
         <activity
             android:name=".activity.TopicDetailsActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.LearnZodiacDetailActivity"
             android:exported="false" />
         <activity

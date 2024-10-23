@@ -1,4 +1,4 @@
-package com.example.tarottales.Model;
+package com.example.tarottales.adapter;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,9 +9,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.tarottales.Model.Message;
 import com.example.tarottales.R;
 
 import java.util.List;
+
+import io.noties.markwon.Markwon;
 
 public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyViewHolder> {
 
@@ -31,6 +34,8 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyViewHo
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Message message = messageList.get(position);
+        Markwon markwon = Markwon.create(holder.itemView.getContext());
+
         if(message.getSentBy().equals(Message.SENT_BY_ME)){
             holder.leftChatView.setVisibility(View.GONE);
             holder.rightChatView.setVisibility(View.VISIBLE);
@@ -38,7 +43,9 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyViewHo
         }else{
             holder.rightChatView.setVisibility(View.GONE);
             holder.leftChatView.setVisibility(View.VISIBLE);
-            holder.leftTextView.setText(message.getMessage());
+//            holder.leftTextView.setText(message.getMessage());
+            markwon.setMarkdown(holder.leftTextView, message.getMessage());
+
         }
     }
 
@@ -51,10 +58,13 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyViewHo
         LinearLayout leftChatView,rightChatView;
         TextView leftTextView,rightTextView;
 
+
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
             leftChatView  = itemView.findViewById(R.id.left_chat_view);
             rightChatView = itemView.findViewById(R.id.right_chat_view);
+
+
             leftTextView = itemView.findViewById(R.id.left_chat_text_view);
             rightTextView = itemView.findViewById(R.id.right_chat_text_view);
         }

@@ -57,9 +57,6 @@ public class TarotCard implements Serializable {
         this.spirit = spirit;
     }
 
-    public TarotCard() {
-    }
-
     public int getId() {
         return id;
     }
