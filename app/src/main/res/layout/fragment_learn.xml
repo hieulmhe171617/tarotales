@@ -18,6 +18,30 @@
         tools:layout_editor_absoluteX="0dp">
     </com.google.android.material.tabs.TabLayout>
 
+    <LinearLayout
+        android:id="@+id/linear_action_filter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/imgBtnFilterCard"
+            android:layout_width="199dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_filter_card" />
+
+        <TextView
+            android:id="@+id/tvNumberOfCard"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_weight="1"
+            android:text="11 lá bài" />
+
+    </LinearLayout>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcvListCard"
         android:layout_width="match_parent"

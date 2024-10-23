@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.tarottales.Model.Element;
@@ -256,7 +257,7 @@ public class LearnDAO extends DBContext {
         SQLiteDatabase db = getReadableDatabase();
         String sql = "select * from " + TB_PLANET + " where id = ?";
         @SuppressLint("Recycle") Cursor cursor = db.rawQuery(sql, new String[]{String.valueOf(planetId)});
-        if(cursor.moveToFirst()){
+        if (cursor.moveToFirst()) {
             planetDetail.setId(cursor.getInt(cursor.getColumnIndex("id")));
             planetDetail.setName(cursor.getString(cursor.getColumnIndex("name")));
             planetDetail.setImage(cursor.getInt(cursor.getColumnIndex("image")));
@@ -271,9 +272,9 @@ public class LearnDAO extends DBContext {
     public List<TarotCard> getListCardByPlanetId(int planetId) {
         List<TarotCard> result = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();
-        String sql = "select tc.* from "+TB_PLANET+" p\n" +
-                "join "+TB_TAROTCARD_PLANET+" tc_p on p.id = tc_p.planetId\n" +
-                "join "+TB_TAROTCARD+" tc on tc_p.tarotCardId = tc.id\n" +
+        String sql = "select tc.* from " + TB_PLANET + " p\n" +
+                "join " + TB_TAROTCARD_PLANET + " tc_p on p.id = tc_p.planetId\n" +
+                "join " + TB_TAROTCARD + " tc on tc_p.tarotCardId = tc.id\n" +
                 "where p.id = ?";
         @SuppressLint("Recycle") Cursor cursor = db.rawQuery(sql, new String[]{String.valueOf(planetId)});
         if (cursor.moveToFirst()) {
@@ -329,7 +330,7 @@ public class LearnDAO extends DBContext {
         SQLiteDatabase db = getReadableDatabase();
         String sql = "select * from " + TB_ZODIAC + " where id = ?";
         @SuppressLint("Recycle") Cursor cursor = db.rawQuery(sql, new String[]{String.valueOf(zodiacId)});
-        if(cursor.moveToFirst()){
+        if (cursor.moveToFirst()) {
             zodiacDetail.setId(cursor.getInt(cursor.getColumnIndex("id")));
             zodiacDetail.setName(cursor.getString(cursor.getColumnIndex("name")));
             zodiacDetail.setImage(cursor.getInt(cursor.getColumnIndex("image")));
@@ -344,9 +345,9 @@ public class LearnDAO extends DBContext {
     public List<TarotCard> getListCardByZodiacId(int zodiacId) {
         List<TarotCard> result = new ArrayList<>();
         SQLiteDatabase db = getReadableDatabase();
-        String sql = "select tc.* from "+TB_ZODIAC+" z\n" +
-                "join "+TB_TAROTCARD_ZODIAC+" tc_z on z.id = tc_z.zodiacId\n" +
-                "join "+TB_TAROTCARD+" tc on tc_z.tarotCardId = tc.id\n" +
+        String sql = "select tc.* from " + TB_ZODIAC + " z\n" +
+                "join " + TB_TAROTCARD_ZODIAC + " tc_z on z.id = tc_z.zodiacId\n" +
+                "join " + TB_TAROTCARD + " tc on tc_z.tarotCardId = tc.id\n" +
                 "where z.id = ?";
         @SuppressLint("Recycle") Cursor cursor = db.rawQuery(sql, new String[]{String.valueOf(zodiacId)});
         if (cursor.moveToFirst()) {
@@ -372,5 +373,71 @@ public class LearnDAO extends DBContext {
 
     //</editor-fold>
 
+    //<editor-fold desc="Filter card">
+    @SuppressLint("Range")
+    public List<TarotCard> getListCardByFilter(String element, String planet, String zodiac) {
+        List<TarotCard> result = new ArrayList<>();
+        SQLiteDatabase db = getReadableDatabase();
+        String sql = customSqlToFilter(element, planet, zodiac);
+
+        @SuppressLint("Recycle") Cursor cursor = db.rawQuery(sql, new String[]{});
+        // Convert Cursor to list
+        List<TarotCard> list = new ArrayList<>();
+        if (cursor.moveToFirst()) {
+            do {
+                TarotCard newCard = new TarotCard();
+                newCard.setId(cursor.getInt(cursor.getColumnIndex("id")));
+                newCard.setName(cursor.getString(cursor.getColumnIndex("name")));
+                newCard.setImage(cursor.getInt(cursor.getColumnIndex("image")));
+                newCard.setCardNumber(cursor.getInt(cursor.getColumnIndex("cardNumber")));
+                newCard.setOtherName(cursor.getString(cursor.getColumnIndex("otherName")));
+                newCard.setKeyword(cursor.getString(cursor.getColumnIndex("keyword")));
+                newCard.setOverview(cursor.getString(cursor.getColumnIndex("overview")));
+                newCard.setJob(cursor.getString(cursor.getColumnIndex("job")));
+                newCard.setLove(cursor.getString(cursor.getColumnIndex("love")));
+                newCard.setFinance(cursor.getString(cursor.getColumnIndex("finance")));
+                newCard.setHealth(cursor.getString(cursor.getColumnIndex("health")));
+                newCard.setSpirit(cursor.getString(cursor.getColumnIndex("spirit")));
+                list.add(newCard);
+            } while (cursor.moveToNext());
+        }
+        return list;
+    }
+
+    private static @NonNull String customSqlToFilter(String element, String planet, String zodiac) {
+        String sql = "select distinct tc.* from " + TB_TAROTCARD + " tc";
+        if (!element.isEmpty()) {
+            sql += "\n" +
+                    "join " + TB_TAROTCARD_ELEMENT + " tc_e on tc.id = tc_e.tarotCardId\n" +
+                    "join " + TB_ELEMENT + " e on tc_e.elementId = e.id";
+        }
+        if (!planet.isEmpty()) {
+            sql += "\n" +
+                    "join " + TB_TAROTCARD_PLANET + " tc_p on tc.id = tc_p.tarotCardId\n" +
+                    "join " + TB_PLANET + " p on tc_p.planetId = p.id";
+        }
+        if (!zodiac.isEmpty()) {
+            sql += "\n" +
+                    "join " + TB_TAROTCARD_ZODIAC + " tc_z on tc.id = tc_z.tarotCardId\n" +
+                    "join " + TB_ZODIAC + " z on tc_z.zodiacId = z.id";
+        }
+        sql += "\n" +
+                "where tc.id != 0";
+        if (!element.isEmpty()) {
+            sql += "\n" +
+                    "and e.name in (" + element + ")";
+        }
+        if (!planet.isEmpty()) {
+            sql += "\n" +
+                    "and p.name in (" + planet + ")";
+        }
+        if (!zodiac.isEmpty()) {
+            sql += "\n" +
+                    "and z.name in (" + zodiac + ")";
+        }
+        return sql;
+    }
+
+    //</editor-fold>
 
 }
