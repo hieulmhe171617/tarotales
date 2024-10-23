@@ -112,9 +112,6 @@ public class LearnFragment extends Fragment {
         });
     }
 
-
-
-
     //<editor-fold desc="Declare - Binding View - Action">
 
     // Status popup is open
@@ -366,7 +363,7 @@ public class LearnFragment extends Fragment {
         // check - element
         StringBuilder selectedElement = new StringBuilder();
         if (cbElementAir.isChecked())
-            selectedElement.append(",'").append(EnumData.ElementName.AIR.getElementName()).append("'");
+            selectedElement.append(",'").append(cbElementAir.getText().toString()).append("'");
         isElementAirChecked = cbElementAir.isChecked();
         if (cbElementEarth.isChecked())
             selectedElement.append(",'").append(cbElementEarth.getText().toString()).append("'");
