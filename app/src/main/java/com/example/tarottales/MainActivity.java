@@ -1,12 +1,7 @@
 package com.example.tarottales;
 
-import android.annotation.SuppressLint;
-import android.database.Cursor;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -36,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.activity_learn_element_detail), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
@@ -52,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private boolean onClickSelectedNavigation(MenuItem item) {
-        if (item.getItemId() == R.id.main) {
+        if (item.getItemId() == R.id.activity_learn_element_detail) {
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.fragment_container, dailyFragment)
