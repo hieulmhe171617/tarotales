@@ -1,5 +1,6 @@
 package com.example.tarottales.fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -30,6 +31,10 @@ import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 import java.util.ArrayList;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import java.io.FileOutputStream;
+import java.io.FileInputStream;
 
 public class ChatFragment extends Fragment {
 
@@ -60,6 +65,7 @@ public class ChatFragment extends Fragment {
                     addToChat(question, Message.SENT_BY_ME);
                     messageEditText.setText("");
                     callGeminiAPI(question);
+                    saveChatHistoryToFile();
                 }
             }
         });
@@ -78,7 +84,8 @@ public class ChatFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         bindingView(view);
         bindingAction();
-
+        // Tải lịch sử chat khi fragment được tạo
+        loadChatHistoryFromFile();
         // Setup RecyclerView
         messageAdapter = new MessageAdapter(messageList);
         recyclerView.setAdapter(messageAdapter);
@@ -101,21 +108,16 @@ public class ChatFragment extends Fragment {
     private void addResponse(String response) {
         messageList.remove(messageList.size() - 1); // Remove "Typing..." message
         // Thực hiện markdown cho tin nhắn với kí tự ** hoặc ##
-        String formattedResponse = formatMarkdown(response);
-        addToChat(formattedResponse, Message.SENT_BY_BOT);
+        addToChat(response, Message.SENT_BY_BOT);
+        saveChatHistoryToFile();
     }
-
-    private String formatMarkdown(String text) {
-        // Xử lý kí tự ** hoặc ## để in đậm
-        text = text.replaceAll("\\*\\*(.*?)\\*\\*", "<b>$1</b>");
-        text = text.replaceAll("##(.*?)##", "<b>$1</b>");
-        return text;
-    }
-
 
     private void callGeminiAPI(String question) {
-        // Add "Typing..." message
-        messageList.add(new Message("Typing...", Message.SENT_BY_BOT));
+        // Thêm tin nhắn "Typing..." vào giao diện mà không lưu vào messageList chính
+        getActivity().runOnUiThread(() -> {
+            messageAdapter.notifyDataSetChanged();
+            recyclerView.smoothScrollToPosition(messageAdapter.getItemCount());
+        });
 
         // Setup Google Gemini model
         GenerativeModel gm = new GenerativeModel("gemini-1.5-flash", apiKey);
@@ -136,7 +138,7 @@ public class ChatFragment extends Fragment {
             public void onSuccess(GenerateContentResponse result) {
                 if (result != null && result.getText() != null) {
                     String resultText = result.getText();
-                    addResponse(resultText.trim());
+                    addResponse(resultText.trim()); // Thêm phản hồi thực từ AI và lưu lại
                 } else {
                     addResponse("No response received.");
                 }
@@ -148,4 +150,51 @@ public class ChatFragment extends Fragment {
             }
         }, executor);
     }
+    
+    private void saveChatHistoryToFile() {
+        try {
+            // Convert message list to JSON array
+            JSONArray jsonArray = new JSONArray();
+            for (Message message : messageList) {
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("message", message.getMessage());
+                jsonObject.put("sentBy", message.getSentBy());
+                jsonArray.put(jsonObject);
+            }
+
+            // Save JSON array to file
+            String filename = "chat_history.json";
+            FileOutputStream fos = getContext().openFileOutput(filename, Context.MODE_PRIVATE);
+            fos.write(jsonArray.toString().getBytes());
+            fos.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    private void loadChatHistoryFromFile() {
+        try {
+            String filename = "chat_history.json";
+            FileInputStream fis = getContext().openFileInput(filename);
+            int size = fis.available();
+            byte[] buffer = new byte[size];
+            fis.read(buffer);
+            fis.close();
+
+            // Convert the JSON array string back to the message list
+            JSONArray jsonArray = new JSONArray(new String(buffer));
+            messageList.clear();
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                String message = jsonObject.getString("message");
+                String sentBy = jsonObject.getString("sentBy");
+                messageList.add(new Message(message, sentBy));
+            }
+
+            // Notify adapter to refresh the chat history
+            messageAdapter.notifyDataSetChanged();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }

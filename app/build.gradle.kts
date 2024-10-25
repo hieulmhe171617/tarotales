@@ -50,4 +50,6 @@ dependencies {
     implementation("com.google.guava:guava:31.0.1-android")
     // Required for streaming operations (to use `Publisher` from Reactive Streams)
     implementation("org.reactivestreams:reactive-streams:1.0.4")
+    implementation ("org.json:json:20210307")
+
 }
