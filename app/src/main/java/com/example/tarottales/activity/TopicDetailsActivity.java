@@ -28,6 +28,7 @@ import com.example.tarottales.Model.TarotCard;
 import com.example.tarottales.R;
 import com.example.tarottales.dto.TopicHistoryDTO;
 import com.example.tarottales.file.JsonTopicHistoryDTOHelper;
+import com.example.tarottales.fragment.ChatFragment;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -78,6 +79,19 @@ public class TopicDetailsActivity extends AppCompatActivity {
         ivBack.setOnClickListener(this::onClickBack);
         ivHistory.setOnClickListener(this::onClickViewHistory);
         btnSave.setOnClickListener(this::onClickSave);
+        btnAi.setOnClickListener(this::onClickAi);
+    }
+    private void onClickAi(View view) {
+        ChatFragment chatFragment = new ChatFragment();
+
+        Bundle args = new Bundle();
+        args.putString("initialText", "hello");
+
+        chatFragment.setArguments(args);
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.main, chatFragment)
+                .addToBackStack(null)
+                .commit();
     }
 
     private void onClickViewHistory(View view) {

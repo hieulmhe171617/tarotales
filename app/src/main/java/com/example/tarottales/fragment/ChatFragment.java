@@ -26,6 +26,7 @@ import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
@@ -37,7 +38,7 @@ import java.io.FileOutputStream;
 import java.io.FileInputStream;
 
 public class ChatFragment extends Fragment {
-
+    private static final String CHAT_HISTORY_FILE = "chat_history.json";
     private String apiKey = "AIzaSyA4mTa5P9V8QtEVOPecbktLdd6LJ5umvHI";
     RecyclerView recyclerView;
     EditText messageEditText;
@@ -65,7 +66,6 @@ public class ChatFragment extends Fragment {
                     addToChat(question, Message.SENT_BY_ME);
                     messageEditText.setText("");
                     callGeminiAPI(question);
-                    saveChatHistoryToFile();
                 }
             }
         });
@@ -84,8 +84,15 @@ public class ChatFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         bindingView(view);
         bindingAction();
-        // Tải lịch sử chat khi fragment được tạo
-        loadChatHistoryFromFile();
+        loadChatHistory();
+
+        if (getArguments() != null) {
+            String initialText = getArguments().getString("initialText");
+            if (initialText != null) {
+                messageEditText.setText(initialText);
+            }
+        }
+
         // Setup RecyclerView
         messageAdapter = new MessageAdapter(messageList);
         recyclerView.setAdapter(messageAdapter);
@@ -95,9 +102,8 @@ public class ChatFragment extends Fragment {
     }
 
     private void addToChat(String message, String sentBy) {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
+        getActivity().runOnUiThread(() -> {
+            synchronized (messageList) {
                 messageList.add(new Message(message, sentBy));
                 messageAdapter.notifyDataSetChanged();
                 recyclerView.smoothScrollToPosition(messageAdapter.getItemCount());
@@ -105,19 +111,17 @@ public class ChatFragment extends Fragment {
         });
     }
 
+
     private void addResponse(String response) {
         messageList.remove(messageList.size() - 1); // Remove "Typing..." message
         // Thực hiện markdown cho tin nhắn với kí tự ** hoặc ##
         addToChat(response, Message.SENT_BY_BOT);
-        saveChatHistoryToFile();
+        saveChatHistory();
     }
 
     private void callGeminiAPI(String question) {
-        // Thêm tin nhắn "Typing..." vào giao diện mà không lưu vào messageList chính
-        getActivity().runOnUiThread(() -> {
-            messageAdapter.notifyDataSetChanged();
-            recyclerView.smoothScrollToPosition(messageAdapter.getItemCount());
-        });
+        // Add "Typing..." message
+        messageList.add(new Message("Typing...", Message.SENT_BY_BOT));
 
         // Setup Google Gemini model
         GenerativeModel gm = new GenerativeModel("gemini-1.5-flash", apiKey);
@@ -139,6 +143,7 @@ public class ChatFragment extends Fragment {
                 if (result != null && result.getText() != null) {
                     String resultText = result.getText();
                     addResponse(resultText.trim()); // Thêm phản hồi thực từ AI và lưu lại
+                    saveChatHistory();
                 } else {
                     addResponse("No response received.");
                 }
@@ -150,51 +155,45 @@ public class ChatFragment extends Fragment {
             }
         }, executor);
     }
-    
-    private void saveChatHistoryToFile() {
-        try {
-            // Convert message list to JSON array
-            JSONArray jsonArray = new JSONArray();
+    private void saveChatHistory() {
+        JSONArray jsonArray = new JSONArray();
+
+        synchronized (messageList) {
             for (Message message : messageList) {
                 JSONObject jsonObject = new JSONObject();
-                jsonObject.put("message", message.getMessage());
-                jsonObject.put("sentBy", message.getSentBy());
-                jsonArray.put(jsonObject);
+                try {
+                    jsonObject.put("text", message.getMessage());
+                    jsonObject.put("sentBy", message.getSentBy());
+                    jsonArray.put(jsonObject);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
+        }
 
-            // Save JSON array to file
-            String filename = "chat_history.json";
-            FileOutputStream fos = getContext().openFileOutput(filename, Context.MODE_PRIVATE);
+        try (FileOutputStream fos = getContext().openFileOutput(CHAT_HISTORY_FILE, Context.MODE_PRIVATE)) {
             fos.write(jsonArray.toString().getBytes());
-            fos.close();
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    private void loadChatHistoryFromFile() {
-        try {
-            String filename = "chat_history.json";
-            FileInputStream fis = getContext().openFileInput(filename);
-            int size = fis.available();
-            byte[] buffer = new byte[size];
-            fis.read(buffer);
-            fis.close();
 
-            // Convert the JSON array string back to the message list
-            JSONArray jsonArray = new JSONArray(new String(buffer));
-            messageList.clear();
+    // Hàm đọc lại lịch sử chat từ JSON khi khởi tạo fragment
+    private void loadChatHistory() {
+        try (FileInputStream fis = getContext().openFileInput(CHAT_HISTORY_FILE)) {
+            byte[] data = new byte[fis.available()];
+            fis.read(data);
+            String jsonString = new String(data);
+
+            JSONArray jsonArray = new JSONArray(jsonString);
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonObject = jsonArray.getJSONObject(i);
-                String message = jsonObject.getString("message");
+                String text = jsonObject.getString("text");
                 String sentBy = jsonObject.getString("sentBy");
-                messageList.add(new Message(message, sentBy));
+                messageList.add(new Message(text, sentBy));
             }
-
-            // Notify adapter to refresh the chat history
-            messageAdapter.notifyDataSetChanged();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
 }
