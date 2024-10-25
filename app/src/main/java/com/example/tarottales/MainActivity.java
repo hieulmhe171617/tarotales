@@ -68,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
         } else if (item.getItemId() == R.id.chat) {
             getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.fragment_container, chatFragment)
+                    .replace(R.id.fragment_container, chatFragment,"chatFragmentTag")
                     .commit();
             return true;
         }

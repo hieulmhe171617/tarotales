@@ -4,6 +4,7 @@ import static java.security.AccessController.getContext;
 
 import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -51,6 +53,7 @@ public class TopicDetailsActivity extends AppCompatActivity {
     private boolean isCard2Open = false;
     private boolean isCard3Open = false;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,15 +86,15 @@ public class TopicDetailsActivity extends AppCompatActivity {
     }
     private void onClickAi(View view) {
         ChatFragment chatFragment = new ChatFragment();
-
         Bundle args = new Bundle();
+        //truyen string hoi bai
         args.putString("initialText", "hello");
-
         chatFragment.setArguments(args);
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.main, chatFragment)
                 .addToBackStack(null)
                 .commit();
+
     }
 
     private void onClickViewHistory(View view) {
@@ -179,8 +182,13 @@ public class TopicDetailsActivity extends AppCompatActivity {
             numberCardOpen++;
             checkOpenSaveAndRestart();
         } else {
+
             //mo sang intent chi tiet
+            Intent intent = new Intent(this, LearnCardDetailActivity.class);
+            intent.putExtra("cardId",3);
+            startActivity(intent);
         }
+
     }
 
     private void checkOpenSaveAndRestart() {

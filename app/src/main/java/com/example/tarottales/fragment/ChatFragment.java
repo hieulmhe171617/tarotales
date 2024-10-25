@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.example.tarottales.Model.Message;
 import com.example.tarottales.adapter.MessageAdapter;
@@ -196,4 +197,5 @@ public class ChatFragment extends Fragment {
             e.printStackTrace();
         }
     }
+
 }
