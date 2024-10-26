@@ -210,7 +210,6 @@
         private void clearChatHistory() {
             messageList.clear();
             messageAdapter.notifyDataSetChanged();
-
             getContext().deleteFile(CHAT_HISTORY_FILE);
             Toast.makeText(getContext(), "Chat history cleared", Toast.LENGTH_SHORT).show();
         }
