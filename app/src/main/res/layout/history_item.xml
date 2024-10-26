@@ -7,7 +7,10 @@
     android:layout_marginTop="10dp"
     android:layout_marginBottom="10dp"
     android:paddingTop="10dp"
-    android:paddingBottom="10dp">
+    android:paddingBottom="10dp"
+
+    >
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -57,7 +60,7 @@
                 android:src="@drawable/tarot_back"/>
             <TextView
                 android:id="@+id/tvCard1"
-                android:layout_width="100dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Name of Card"
                 android:textColor="#FFF"
@@ -79,7 +82,7 @@
                 android:src="@drawable/tarot_back"/>
             <TextView
                 android:id="@+id/tvCard2"
-                android:layout_width="100dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Name of Card"
                 android:textColor="#FFF"
@@ -101,7 +104,7 @@
                 android:src="@drawable/tarot_back"/>
             <TextView
                 android:id="@+id/tvCard3"
-                android:layout_width="100dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Name of Card"
                 android:textColor="#FFF"
