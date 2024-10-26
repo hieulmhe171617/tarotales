@@ -78,4 +78,5 @@ public class TopicHistoryActivity extends AppCompatActivity {
         ivBack = findViewById(R.id.ivBack);
 
     }
+
 }

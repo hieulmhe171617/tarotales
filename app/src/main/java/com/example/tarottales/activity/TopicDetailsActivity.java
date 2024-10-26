@@ -28,6 +28,7 @@ import com.example.tarottales.Model.TarotCard;
 import com.example.tarottales.R;
 import com.example.tarottales.dto.TopicHistoryDTO;
 import com.example.tarottales.file.JsonTopicHistoryDTOHelper;
+import com.example.tarottales.fragment.ChatFragment;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -38,9 +39,6 @@ public class TopicDetailsActivity extends AppCompatActivity {
     private TextView tvCard1, tvCard2, tvCard3;
     private Button btnSave, btnAi;
     private ImageView ivBack, ivHistory;
-    //shared preferences
-    private SharedPreferences sharedPreferences;
-    private SharedPreferences.Editor editor;
     //
     DBContext dbContext;
     //
@@ -78,7 +76,37 @@ public class TopicDetailsActivity extends AppCompatActivity {
         ivBack.setOnClickListener(this::onClickBack);
         ivHistory.setOnClickListener(this::onClickViewHistory);
         btnSave.setOnClickListener(this::onClickSave);
+        btnAi.setOnClickListener(this::onClickAi);
     }
+
+    private void onClickAi(View view) {
+        String[] topics = {"Tình yêu", "Sự nghiệp", "Sức khỏe","Tinh thần","Khác"};
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Bạn muốn hỏi về chủ đề nào?");
+        builder.setItems(topics, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                String selectedTopic;
+                if (which == topics.length - 1) {
+                    selectedTopic = "";
+                } else {
+                    selectedTopic = topics[which];
+                }
+                String question = "Tôi đang muốn tham khảo ý kiến khi trải bài tự do Tarot ra 3 lá:" + cards.get(0).getName()
+                        + ", " + cards.get(1).getName() + ", " + cards.get(2).getName() + " về chủ đề " + selectedTopic;
+                ChatFragment chatFragment = new ChatFragment();
+                Bundle args = new Bundle();
+                args.putString("initialText", question);
+                chatFragment.setArguments(args);
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.main, chatFragment)
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+        builder.show();
+    }
+
 
     private void onClickViewHistory(View view) {
         //mo sang intent lich su
@@ -97,6 +125,8 @@ public class TopicDetailsActivity extends AppCompatActivity {
     private void showNotePopup(String dateTime) {
         //tao popup len de nhap note
         final EditText input = new EditText(this);
+        input.setMaxLines(8);
+        input.setVerticalScrollBarEnabled(true);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Ghi chú");
         builder.setMessage("Bạn có muốn ghi chú gì vào nội dung trải bài này không?");
@@ -107,9 +137,13 @@ public class TopicDetailsActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
                 String note;
                 if(input.getText().toString().isEmpty()){
-                    note = "";
+                    note = "Không có ghi chú";
                 } else {
                     note = input.getText().toString();
+                    if(note.length() >= 5000){
+                        Toast.makeText(TopicDetailsActivity.this, "Vui lòng ghi chú nội dung dưới 5000 ký tự!", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                 }
                 //luu vao json
                 saveHistoryToJson(dateTime, note);
@@ -137,7 +171,7 @@ public class TopicDetailsActivity extends AppCompatActivity {
         dto.setDate(date);
         dto.setTime(time);
         dto.setNote(note);
-        JsonTopicHistoryDTOHelper.addTopicHistoryDTO(this,dto,"topicHistory.json");
+        JsonTopicHistoryDTOHelper.addTopicHistoryDTO(this,dto,JsonTopicHistoryDTOHelper.FILE_NAME);
         btnSave.setEnabled(false);
     }
 
@@ -166,6 +200,9 @@ public class TopicDetailsActivity extends AppCompatActivity {
             checkOpenSaveAndRestart();
         } else {
             //mo sang intent chi tiet
+            Intent intent = new Intent(this, LearnCardDetailActivity.class);
+            intent.putExtra("cardId",tarotCard.getId());
+            startActivity(intent);
         }
     }
 
@@ -199,9 +236,6 @@ public class TopicDetailsActivity extends AppCompatActivity {
         ivHistory = findViewById(R.id.ivHistory);
         btnSave.setVisibility(View.GONE);
         btnAi.setVisibility(View.GONE);
-        //shared preferences
-        sharedPreferences = getSharedPreferences("freeTopicTarot", MODE_PRIVATE);
-        editor = sharedPreferences.edit();
         //
         dbContext = new TarotCardDAO(this);
     }

@@ -32,6 +32,7 @@ import com.example.tarottales.Database.DBContext;
 import com.example.tarottales.Database.TarotCardDAO;
 import com.example.tarottales.Model.TarotCard;
 import com.example.tarottales.R;
+import com.example.tarottales.activity.LearnCardDetailActivity;
 import com.example.tarottales.service.ResetMonthly;
 
 import java.util.Calendar;
@@ -120,6 +121,9 @@ public class MonthlyFragment extends Fragment {
             }).start();
         } else {
             //sang intent chi tiet
+            Intent intent = new Intent(getContext(), LearnCardDetailActivity.class);
+            intent.putExtra("cardId", weekTmp);
+            startActivity(intent);
         }
     }
 

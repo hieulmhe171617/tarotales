@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class JsonTopicHistoryDTOHelper {
+    public static final String FILE_NAME = "topicHistory.json";
+
     public static void saveTopicHistoryDTOToJson(Context context, List<TopicHistoryDTO> list, String fileName) {
         Gson gson = new Gson();
         String jsonString = gson.toJson(list);
@@ -61,4 +63,20 @@ public class JsonTopicHistoryDTOHelper {
         //ghi lai
         saveTopicHistoryDTOToJson(context, currentList, fileName);
     }
+
+
+    public static void updateNote(Context context, String date, String time, String newNote, String fileName) {
+        List<TopicHistoryDTO> currentList = readTopicHistoryDToFromJson(context, fileName);
+        if (currentList == null) {
+            currentList = new ArrayList<>();
+        }
+        for (TopicHistoryDTO topic : currentList) {
+            if (topic.getDate().equals(date) && topic.getTime().equals(time)) {
+                topic.setNote(newNote);
+                break;
+            }
+        }
+        saveTopicHistoryDTOToJson(context, currentList, fileName);
+    }
+
 }

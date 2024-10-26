@@ -33,6 +33,7 @@ import com.example.tarottales.Database.DBContext;
 import com.example.tarottales.Database.TarotCardDAO;
 import com.example.tarottales.Model.TarotCard;
 import com.example.tarottales.R;
+import com.example.tarottales.activity.LearnCardDetailActivity;
 import com.example.tarottales.service.ResetOpenDaily;
 
 import java.util.Calendar;
@@ -54,6 +55,7 @@ public class DailyFragment extends Fragment {
     private boolean isOpenToday;
     //
     private Button btnResetAll;
+    private int cardId = 0;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -81,6 +83,7 @@ public class DailyFragment extends Fragment {
                 TarotCard card = ((TarotCardDAO) dbContext).getRandomTarotCardForDailyDay();
                 if (card != null) {
                     if (getActivity() != null) {
+                        cardId = card.getId();
                         editor.putInt("cardId", card.getId());
                         editor.putBoolean("isOpenToday", true);
                         editor.commit();
@@ -94,6 +97,9 @@ public class DailyFragment extends Fragment {
 
         } else {
             //mo sang intent chi tiet card
+            Intent intent = new Intent(getContext(), LearnCardDetailActivity.class);
+            intent.putExtra("cardId", cardId);
+            startActivity(intent);
         }
     }
 
@@ -161,6 +167,7 @@ public class DailyFragment extends Fragment {
             //da mo roi
             new Thread(()->{
                 TarotCard card = ((TarotCardDAO) dbContext).getTarotCardById(pref.getInt("cardId", 0));
+                cardId = card.getId();
                 if(card != null){
                     if (getActivity() != null) {
                         getActivity().runOnUiThread(() ->{

@@ -2,6 +2,7 @@ package com.example.tarottales.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,7 +28,7 @@ public class LearnCardDetailActivity extends AppCompatActivity {
     LearnDAO learnDAO;
 
     // View
-    ImageView imgLearnCardDetail;
+    ImageView imgLearnCardDetail, btnBack;
     TextView tvLearnCardDetailTitle, tvLearnCardDetailCardNumber,
             tvLearnCardDetailName, tvLearnCardDetailElement, tvLearnCardDetailPlanet,
             tvLearnCardDetailZodiac, tvLearnCardDetailKeyword,
@@ -50,11 +51,17 @@ public class LearnCardDetailActivity extends AppCompatActivity {
         tvLearnCardDetailFinance = findViewById(R.id.tvLearnCardDetailFinance);
         tvLearnCardDetailHealth = findViewById(R.id.tvLearnCardDetailHealth);
         tvLearnCardDetailSpirit = findViewById(R.id.tvLearnCardDetailSpirit);
+        btnBack = findViewById(R.id.btnBack);
         if (learnDAO == null) learnDAO = new LearnDAO(this);
     }
 
     void bindingAction() {
         onReceiveIntent();
+        btnBack.setOnClickListener(this::onClickBack);
+    }
+
+    private void onClickBack(View view) {
+        finish();
     }
 
     // receive intent
