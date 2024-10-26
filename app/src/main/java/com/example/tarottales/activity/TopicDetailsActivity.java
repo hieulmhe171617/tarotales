@@ -4,6 +4,7 @@ import static java.security.AccessController.getContext;
 
 import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -47,6 +49,7 @@ public class TopicDetailsActivity extends AppCompatActivity {
     private boolean isCard1Open = false;
     private boolean isCard2Open = false;
     private boolean isCard3Open = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -199,11 +202,13 @@ public class TopicDetailsActivity extends AppCompatActivity {
             numberCardOpen++;
             checkOpenSaveAndRestart();
         } else {
+
             //mo sang intent chi tiet
             Intent intent = new Intent(this, LearnCardDetailActivity.class);
             intent.putExtra("cardId",tarotCard.getId());
             startActivity(intent);
         }
+
     }
 
     private void checkOpenSaveAndRestart() {
