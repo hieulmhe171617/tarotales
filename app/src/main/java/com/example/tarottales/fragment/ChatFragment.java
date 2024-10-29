@@ -33,6 +33,8 @@ import java.util.ArrayList;
 
 public class ChatFragment extends Fragment {
 
+
+
     private String apiKey = "AIzaSyA4mTa5P9V8QtEVOPecbktLdd6LJ5umvHI";
     RecyclerView recyclerView;
     EditText messageEditText;
