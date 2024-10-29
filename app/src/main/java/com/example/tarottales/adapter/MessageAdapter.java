@@ -1,10 +1,15 @@
 package com.example.tarottales.adapter;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -36,18 +41,26 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyViewHo
         Message message = messageList.get(position);
         Markwon markwon = Markwon.create(holder.itemView.getContext());
 
-        if(message.getSentBy().equals(Message.SENT_BY_ME)){
+        if (message.getSentBy().equals(Message.SENT_BY_ME)) {
             holder.leftChatView.setVisibility(View.GONE);
             holder.rightChatView.setVisibility(View.VISIBLE);
-
-            // Set CharSequence message (can be SpannableString or String)
             holder.rightTextView.setText(message.getMessage());
+
+            // Thêm sự kiện nhấn giữ cho tin nhắn bên phải
+            holder.rightTextView.setOnLongClickListener(v -> {
+                showCopyMenu(v, message.getMessage());
+                return true;
+            });
         } else {
             holder.rightChatView.setVisibility(View.GONE);
             holder.leftChatView.setVisibility(View.VISIBLE);
-//            holder.leftTextView.setText(message.getMessage());
             markwon.setMarkdown(holder.leftTextView, message.getMessage());
+            // Thêm sự kiện nhấn giữ cho tin nhắn bên trái
+            holder.leftTextView.setOnLongClickListener(v -> {
 
+                showCopyMenu(v, message.getMessage());
+                return true;
+            });
         }
     }
 
@@ -71,4 +84,20 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageAdapter.MyViewHo
             rightTextView = itemView.findViewById(R.id.right_chat_text_view);
         }
     }
+    private void showCopyMenu(View view, String messageText) {
+        PopupMenu popupMenu = new PopupMenu(view.getContext(), view);
+        popupMenu.getMenu().add("Copy");
+
+        popupMenu.setOnMenuItemClickListener(item -> {
+            if (item.getTitle().equals("Copy")) {
+                ClipboardManager clipboard = (ClipboardManager) view.getContext().getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData clip = ClipData.newPlainText("Copied Text", messageText);
+                clipboard.setPrimaryClip(clip);
+                Toast.makeText(view.getContext(), "Text copied to clipboard", Toast.LENGTH_SHORT).show();
+            }
+            return true;
+        });
+
+        popupMenu.show();
+}
 }

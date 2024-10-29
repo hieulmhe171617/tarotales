@@ -88,7 +88,7 @@ public class TopicDetailsActivity extends AppCompatActivity {
 
     private void onClickAi(View view) {
 
-        String[] topics = {"Tình cảm", "Sự nghiệp", "Sức khỏe","Tinh thần","Khác"};
+        String[] topics = {"Sự nghiệp", "Sức khỏe","Tinh thần","Khác"};
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Bạn muốn hỏi về chủ đề nào?");
         builder.setItems(topics, new DialogInterface.OnClickListener() {
@@ -100,8 +100,8 @@ public class TopicDetailsActivity extends AppCompatActivity {
                 } else {
                     selectedTopic = topics[which];
                 }
-                String question = "Tôi đang muốn tham khảo ý kiến khi trải bài tự do Tarot ra 3 lá:" + cards.get(0).getName()
-                        + ", " + cards.get(1).getName() + ", " + cards.get(2).getName() + " về chủ đề " + selectedTopic;
+                String question = "Tôi muốn nhờ bạn đưa ra ý kiến tham khảo sau khi tôi trải bài tự do ra 3 lá sau: " + cards.get(0).getName()
+                        + ", " + cards.get(1).getName() + ", " + cards.get(2).getName() + " vấn đề tôi muốn hỏi là về " + selectedTopic;
                 ChatFragment chatFragment = new ChatFragment();
                 Bundle args = new Bundle();
                 args.putString("initialText", question);
