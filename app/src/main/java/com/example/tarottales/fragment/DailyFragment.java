@@ -202,10 +202,9 @@ public class DailyFragment extends Fragment {
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
             PendingIntent pending = PendingIntent.getBroadcast(getContext(), 10, intent, PendingIntent.FLAG_IMMUTABLE);
             //thong bao se duoc reset vao 6h sang moi ngay
-
             Calendar calendar = Calendar.getInstance();
-            calendar.set(Calendar.HOUR_OF_DAY, 6);
-            calendar.set(Calendar.MINUTE, 0);
+            calendar.set(Calendar.HOUR_OF_DAY, 21);
+            calendar.set(Calendar.MINUTE, 42);
             calendar.set(Calendar.SECOND, 0);
             if (calendar.getTimeInMillis() < System.currentTimeMillis()) {
                 //da qua 6h sang
@@ -222,4 +221,5 @@ public class DailyFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_daily, container, false);
     }
+
 }
